@@ -2,14 +2,12 @@ module.exports = {
   env: {
     node: true,
     es2021: true,
-    jest: true,
+    jest: true
   },
-  extends: [
-    'eslint:recommended',
-  ],
+  extends: ['eslint:recommended'],
   parserOptions: {
     ecmaVersion: 'latest',
-    sourceType: 'module',
+    sourceType: 'module'
   },
   rules: {
     // Code quality
@@ -18,17 +16,17 @@ module.exports = {
     'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     'no-var': 'error',
     'prefer-const': 'error',
-    
+
     // Code style
-    'indent': ['error', 2],
-    'quotes': ['error', 'single'],
-    'semi': ['error', 'always'],
+    indent: ['error', 2],
+    quotes: ['error', 'single'],
+    semi: ['error', 'always'],
     'comma-dangle': ['error', 'never'],
     'object-curly-spacing': ['error', 'always'],
     'array-bracket-spacing': ['error', 'never'],
-    
+
     // Best practices
-    'eqeqeq': 'error',
+    eqeqeq: 'error',
     'no-eval': 'error',
     'no-implied-eval': 'error',
     'no-new-func': 'error',
@@ -38,18 +36,18 @@ module.exports = {
     'no-unmodified-loop-condition': 'error',
     'no-useless-call': 'error',
     'no-useless-concat': 'error',
-    'radix': 'error',
-    
+    radix: 'error',
+
     // Node.js specific
     'no-process-exit': 'error',
-    'handle-callback-err': 'error',
+    'handle-callback-err': 'error'
   },
   overrides: [
     {
       files: ['tests/**/*.js'],
       rules: {
-        'no-console': 'off', // Allow console logs in tests
-      },
-    },
-  ],
+        'no-console': 'off' // Allow console logs in tests
+      }
+    }
+  ]
 };

@@ -15,8 +15,12 @@ describe('Calculator', () => {
     });
 
     test('should throw error for non-numeric input', () => {
-      expect(() => calculator.add('2', 3)).toThrow('Both arguments must be numbers');
-      expect(() => calculator.add(2, '3')).toThrow('Both arguments must be numbers');
+      expect(() => calculator.add('2', 3)).toThrow(
+        'Both arguments must be numbers'
+      );
+      expect(() => calculator.add(2, '3')).toThrow(
+        'Both arguments must be numbers'
+      );
     });
   });
 
@@ -30,7 +34,9 @@ describe('Calculator', () => {
     });
 
     test('should throw error for non-numeric input', () => {
-      expect(() => calculator.subtract('5', 3)).toThrow('Both arguments must be numbers');
+      expect(() => calculator.subtract('5', 3)).toThrow(
+        'Both arguments must be numbers'
+      );
     });
   });
 
@@ -59,11 +65,15 @@ describe('Calculator', () => {
     });
 
     test('should throw error for division by zero', () => {
-      expect(() => calculator.divide(10, 0)).toThrow('Division by zero is not allowed');
+      expect(() => calculator.divide(10, 0)).toThrow(
+        'Division by zero is not allowed'
+      );
     });
 
     test('should throw error for non-numeric input', () => {
-      expect(() => calculator.divide('10', 2)).toThrow('Both arguments must be numbers');
+      expect(() => calculator.divide('10', 2)).toThrow(
+        'Both arguments must be numbers'
+      );
     });
   });
 });

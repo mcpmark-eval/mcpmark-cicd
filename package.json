@@ -16,7 +16,14 @@
     "build": "echo 'Build complete - no compilation needed for Node.js'",
     "health-check": "curl -f http://localhost:3000/health || exit 1"
   },
-  "keywords": ["express", "nodejs", "api", "testing", "cicd", "rest"],
+  "keywords": [
+    "express",
+    "nodejs",
+    "api",
+    "testing",
+    "cicd",
+    "rest"
+  ],
   "author": "AI Assistant",
   "license": "MIT",
   "dependencies": {

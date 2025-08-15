@@ -46,25 +46,36 @@ describe('UserService', () => {
     });
 
     test('should trim whitespace from name and email', () => {
-      const newUser = userService.createUser('  John Doe  ', '  JOHN@example.com  ');
+      const newUser = userService.createUser(
+        '  John Doe  ',
+        '  JOHN@example.com  '
+      );
       expect(newUser.name).toBe('John Doe');
       expect(newUser.email).toBe('john@example.com');
     });
 
     test('should throw error for missing name', () => {
-      expect(() => userService.createUser('', 'test@example.com')).toThrow('Name and email are required');
+      expect(() => userService.createUser('', 'test@example.com')).toThrow(
+        'Name and email are required'
+      );
     });
 
     test('should throw error for missing email', () => {
-      expect(() => userService.createUser('John', '')).toThrow('Name and email are required');
+      expect(() => userService.createUser('John', '')).toThrow(
+        'Name and email are required'
+      );
     });
 
     test('should throw error for invalid email format', () => {
-      expect(() => userService.createUser('John', 'invalid-email')).toThrow('Invalid email format');
+      expect(() => userService.createUser('John', 'invalid-email')).toThrow(
+        'Invalid email format'
+      );
     });
 
     test('should throw error for duplicate email', () => {
-      expect(() => userService.createUser('Another Alice', 'alice@example.com')).toThrow('User with this email already exists');
+      expect(() =>
+        userService.createUser('Another Alice', 'alice@example.com')
+      ).toThrow('User with this email already exists');
     });
   });
 
@@ -76,11 +87,15 @@ describe('UserService', () => {
     });
 
     test('should throw error for non-existent user', () => {
-      expect(() => userService.updateUser(999, { name: 'Test' })).toThrow('User not found');
+      expect(() => userService.updateUser(999, { name: 'Test' })).toThrow(
+        'User not found'
+      );
     });
 
     test('should validate email format on update', () => {
-      expect(() => userService.updateUser(1, { email: 'invalid-email' })).toThrow('Invalid email format');
+      expect(() =>
+        userService.updateUser(1, { email: 'invalid-email' })
+      ).toThrow('Invalid email format');
     });
   });
 

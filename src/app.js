@@ -30,7 +30,7 @@ app.get('/health', (req, res) => {
 app.post('/calculate', (req, res) => {
   try {
     const { operation, a, b } = req.body;
-    
+
     if (!operation || typeof a !== 'number' || typeof b !== 'number') {
       return res.status(400).json({ error: 'Invalid input' });
     }

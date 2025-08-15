@@ -29,7 +29,7 @@ describe('API Endpoints', () => {
       const response = await request(app)
         .post('/calculate')
         .send({ operation: 'add', a: 5, b: 3 });
-      
+
       expect(response.status).toBe(200);
       expect(response.body.result).toBe(8);
       expect(response.body.operation).toBe('add');
@@ -40,7 +40,7 @@ describe('API Endpoints', () => {
       const response = await request(app)
         .post('/calculate')
         .send({ operation: 'subtract', a: 10, b: 4 });
-      
+
       expect(response.status).toBe(200);
       expect(response.body.result).toBe(6);
     });
@@ -49,7 +49,7 @@ describe('API Endpoints', () => {
       const response = await request(app)
         .post('/calculate')
         .send({ operation: 'add', a: 'not a number', b: 3 });
-      
+
       expect(response.status).toBe(400);
       expect(response.body).toHaveProperty('error', 'Invalid input');
     });
@@ -58,9 +58,12 @@ describe('API Endpoints', () => {
       const response = await request(app)
         .post('/calculate')
         .send({ operation: 'divide', a: 10, b: 0 });
-      
+
       expect(response.status).toBe(400);
-      expect(response.body).toHaveProperty('error', 'Division by zero is not allowed');
+      expect(response.body).toHaveProperty(
+        'error',
+        'Division by zero is not allowed'
+      );
     });
   });
 
@@ -78,33 +81,33 @@ describe('API Endpoints', () => {
   describe('POST /users', () => {
     test('should create a new user', async () => {
       const newUser = { name: 'Test User', email: 'test@example.com' };
-      const response = await request(app)
-        .post('/users')
-        .send(newUser);
-      
+      const response = await request(app).post('/users').send(newUser);
+
       expect(response.status).toBe(201);
       expect(response.body).toHaveProperty('user');
       expect(response.body.user.name).toBe(newUser.name);
       expect(response.body.user.email).toBe(newUser.email);
-      expect(response.body).toHaveProperty('message', 'User created successfully');
+      expect(response.body).toHaveProperty(
+        'message',
+        'User created successfully'
+      );
     });
 
     test('should return error for duplicate email', async () => {
       const newUser = { name: 'Another Alice', email: 'alice@example.com' };
-      const response = await request(app)
-        .post('/users')
-        .send(newUser);
-      
+      const response = await request(app).post('/users').send(newUser);
+
       expect(response.status).toBe(400);
-      expect(response.body).toHaveProperty('error', 'User with this email already exists');
+      expect(response.body).toHaveProperty(
+        'error',
+        'User with this email already exists'
+      );
     });
 
     test('should return error for invalid email', async () => {
       const newUser = { name: 'Test User', email: 'invalid-email' };
-      const response = await request(app)
-        .post('/users')
-        .send(newUser);
-      
+      const response = await request(app).post('/users').send(newUser);
+
       expect(response.status).toBe(400);
       expect(response.body).toHaveProperty('error', 'Invalid email format');
     });

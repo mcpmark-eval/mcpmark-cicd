@@ -24,11 +24,13 @@ npm run build
 ## 📊 API Endpoints
 
 ### Health & Status
+
 - `GET /` - API information and status
 - `GET /health` - Health check endpoint
 - `GET /status/deployment` - Deployment information
 
 ### Calculator API
+
 - `POST /calculate` - Perform mathematical operations
   ```json
   {
@@ -39,6 +41,7 @@ npm run build
   ```
 
 ### User Management
+
 - `GET /users` - List all users
 - `POST /users` - Create new user
   ```json
@@ -66,6 +69,7 @@ npm run test:coverage      # Coverage report
 ## ⚡ Performance Optimized
 
 This application is optimized for fast development and deployment:
+
 - No Docker builds (pure Node.js)
 - All tests complete in under 30 seconds
 - Lightweight dependencies
@@ -74,6 +78,7 @@ This application is optimized for fast development and deployment:
 ## 📋 Available Scripts
 
 ### Development
+
 ```bash
 npm run dev              # Start development server with auto-reload
 npm start               # Start production server
@@ -83,6 +88,7 @@ npm run test:coverage   # Generate coverage report
 ```
 
 ### Code Quality
+
 ```bash
 npm run lint            # Check code style and quality
 npm run lint:fix        # Auto-fix linting issues
@@ -90,6 +96,7 @@ npm run format          # Format code with Prettier
 ```
 
 ### Health Checks
+
 ```bash
 npm run health-check    # Check application health
 curl http://localhost:3000/health  # Direct health check
@@ -124,12 +131,14 @@ mcpmark-cicd/
 ## 🔧 Development
 
 ### Adding New Features
+
 1. Create new endpoint in `src/app.js`
 2. Write corresponding tests in `tests/`
 3. Run `npm test` to verify
 4. Use `npm run lint:fix` for code style
 
 ### Testing Strategy
+
 - **Unit Tests**: Test individual functions and modules
 - **Integration Tests**: Test API endpoints end-to-end
 - **Validation Tests**: Ensure proper input validation
@@ -138,18 +147,21 @@ mcpmark-cicd/
 ## 🚨 Common Issues & Solutions
 
 ### Port Already in Use
+
 ```bash
 lsof -ti:3000 | xargs kill -9
 npm start
 ```
 
 ### Test Failures
+
 ```bash
 npm run lint:fix          # Fix code style issues
 npm test -- --verbose     # Get detailed test output
 ```
 
 ### Performance Issues
+
 ```bash
 npm ci                     # Clean install dependencies
 npm run test:coverage      # Verify test coverage
@@ -165,6 +177,7 @@ npm run test:coverage      # Verify test coverage
 ## 📝 API Examples
 
 ### Calculator Usage
+
 ```bash
 # Addition
 curl -X POST http://localhost:3000/calculate \
@@ -178,6 +191,7 @@ curl -X POST http://localhost:3000/calculate \
 ```
 
 ### User Management
+
 ```bash
 # List users
 curl http://localhost:3000/users
@@ -189,6 +203,7 @@ curl -X POST http://localhost:3000/users \
 ```
 
 ### Health Monitoring
+
 ```bash
 # Basic health check
 curl http://localhost:3000/health

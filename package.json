@@ -3,14 +3,15 @@
   "version": "1.0.0",
   "description": "A lightweight Node.js Express application with comprehensive testing and CI/CD practices",
   "main": "src/app.js",
+  "type": "commonjs",
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "lint": "eslint src/ --ext .js",
-    "lint:fix": "eslint src/ --ext .js --fix",
+    "lint": "eslint \"src/**/*.js\"",
+    "lint:fix": "eslint \"src/**/*.js\" --fix",
     "format": "prettier --write src/",
     "build": "echo 'Build complete - no compilation needed for Node.js'",
     "health-check": "curl -f http://localhost:3000/health || exit 1"

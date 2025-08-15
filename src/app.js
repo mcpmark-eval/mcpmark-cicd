@@ -68,7 +68,9 @@ app.get('/status/deployment', (req, res) => {
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => {
+    // eslint-disable-next-line no-console
     console.log(`Server running on port ${PORT}`);
+    // eslint-disable-next-line no-console
     console.log(`Health check: http://localhost:${PORT}/health`);
   });
 }

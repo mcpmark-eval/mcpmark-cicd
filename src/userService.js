@@ -11,7 +11,7 @@ const userService = {
   },
 
   getUserById: (id) => {
-    return users.find(user => user.id === parseInt(id));
+    return users.find(user => user.id === parseInt(id, 10));
   },
 
   createUser: (name, email) => {
@@ -39,7 +39,7 @@ const userService = {
   },
 
   updateUser: (id, updates) => {
-    const userIndex = users.findIndex(user => user.id === parseInt(id));
+    const userIndex = users.findIndex(user => user.id === parseInt(id, 10));
     if (userIndex === -1) {
       throw new Error('User not found');
     }
@@ -53,7 +53,7 @@ const userService = {
   },
 
   deleteUser: (id) => {
-    const userIndex = users.findIndex(user => user.id === parseInt(id));
+    const userIndex = users.findIndex(user => user.id === parseInt(id, 10));
     if (userIndex === -1) {
       throw new Error('User not found');
     }

@@ -15,9 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       issue_number: ${{ steps.create_issue.outputs.issue_number }}
-      previous_commit: ${{ steps.capture.outputs.previous_commit }}
-      commit_sha: ${{ steps.capture.outputs.commit_sha }}
-      package_version: ${{ steps.capture.outputs.package_version }}
+      previous_commit: ${{ steps.cap.outputs.previous_commit }}
+      commit_sha: ${{ steps.cap.outputs.commit_sha }}
+      package_version: ${{ steps.cap.outputs.package_version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -34,7 +34,7 @@ jobs:
       - name: Run tests
         run: npm test --if-present
       - name: Capture commit and version
-        id: capture
+        id: cap
         run: |
           PREVIOUS_COMMIT=$(git rev-parse HEAD^)
           COMMIT_SHA_HEAD=${GITHUB_SHA}
@@ -47,7 +47,8 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const commitSha = '${{ steps.capture.outputs.commit_sha }}';
+            const core = require('@actions/core');
+            const commitSha = '${{ steps.cap.outputs.commit_sha }}';
             const owner = context.repo.owner;
             const repo = context.repo.repo;
             const issue = await github.issues.create({ owner, repo, title: `Deployment Tracking - ${commitSha}` });
@@ -98,7 +99,6 @@ git fetch --all
 git reset --hard "$PREVIOUS"
 EOS
           chmod +x artifacts/rollback/rollback.sh
-          # Backups
           cp package.json artifacts/rollback/backup/ 2>/dev/null || true
           cp package-lock.json artifacts/rollback/backup/ 2>/dev/null || true
           if [ -f .env.example ]; then
@@ -107,7 +107,6 @@ EOS
           if [ -d environments ]; then
             cp -r environments artifacts/rollback/backup/environments
           fi
-          # Dependency verification script
           cat > artifacts/rollback/verify-deps.sh <<'EOS'
 #!/usr/bin/env bash
 set -euo pipefail
@@ -115,12 +114,10 @@ node -v
 npm -v
 EOS
           chmod +x artifacts/rollback/verify-deps.sh
-          # Documentation
           cat > artifacts/rollback/README-rollback.md <<'MD'
 # Rollback Plan
-Follow these steps to rollback deployment if needed.
+This document describes how to rollback a deployment manually.
 MD
-          # Tarball
           tar -czf rollback-package-${COMMIT_SHA}.tar.gz -C artifacts/rollback .
           sha256sum rollback-package-${COMMIT_SHA}.tar.gz > rollback-package-${COMMIT_SHA}.tar.gz.sha256
       - name: Upload rollback artifacts
@@ -129,7 +126,7 @@ MD
           name: rollback-artifacts-${{ needs.pre-deployment.outputs.commit_sha }}
           path: artifacts/rollback/**
           retention-days: 30
-      - name: Post rollback plan comment
+      - name: Post rollback comment
         uses: actions/github-script@v6
         with:
           script: |
@@ -138,20 +135,16 @@ MD
             const repo = context.repo.repo;
             const commitSha = '${{ needs.pre-deployment.outputs.commit_sha }}';
             const previousCommit = '${{ needs.pre-deployment.outputs.previous_commit }}';
-            const packageVersion = '${{ needs.pre-deployment.outputs.package_version }}';
+            const version = '${{ needs.pre-deployment.outputs.package_version }}';
             const artifactName = `rollback-package-${commitSha}`;
             const fs = require('fs');
             let checksum = '';
-            try {
-              checksum = fs.readFileSync(`rollback-package-${commitSha}.tar.gz.sha256`, 'utf8').trim().split(/\\s+/)[0];
-            } catch (e) {
-              checksum = '';
-            }
+            try { checksum = fs.readFileSync(`rollback-package-${commitSha}.tar.gz.sha256`, 'utf8').trim().split(/\\s+/)[0]; } catch(e) { checksum = ''; }
             const body = [
               '**Title:** 🔄 Rollback Plan Ready',
               `- Previous commit: ${previousCommit}`,
               `- Current commit: ${commitSha}`,
-              `- Package Version: ${packageVersion}`,
+              `- Package Version: ${version}`,
               `- Artifact: ${artifactName}`,
               '✅ ✅ ✅ ✅ ✅',
               'Quick rollback command:',

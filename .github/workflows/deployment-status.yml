@@ -118,7 +118,7 @@ EOS
           # Documentation
           cat > artifacts/rollback/README-rollback.md <<'MD'
 # Rollback Plan
-Follow these steps to rollback deployment if needed.
+This document describes how to rollback a deployment manually.
 MD
           # Tarball
           tar -czf rollback-package-${COMMIT_SHA}.tar.gz -C artifacts/rollback .
@@ -187,6 +187,6 @@ MD
             await github.issues.update({ owner, repo, issue_number, labels: updated });
             const commitSha = '${{ needs.pre-deployment.outputs.commit_sha }}';
             const artifactName = `rollback-package-${commitSha}`;
-            const body = `Deployment Completed Successfully\nArtifact: ${artifactName}`;
+            const body = `Deployment Completed Successfully\\nArtifact: ${artifactName}`;
             await github.issues.createComment({ owner, repo, issue_number, body });
             await github.issues.update({ owner, repo, issue_number, state: 'closed' });
